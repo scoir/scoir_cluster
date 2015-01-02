@@ -28,6 +28,16 @@
    - bc
    - python-pip
 
+# Disable the default mongod
+- service: name=mongod enabled=no
+- service: name=mongod state=stopped
+
+- name: create log directory
+  file: path=/var/log/mongo state=directory owner=mongod group=mongod
+
+- name: create run directory for pid files
+  file: path=/var/run/mongo state=directory owner=mongod group=mongod
+
 - name: Install the latest pymongo package
   pip: name=pymongo state=latest use_mirrors=no 
 
